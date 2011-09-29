@@ -1,0 +1,79 @@
+body {background: #425262 url(textures/circles.png);}
+.container {
+	width: 970px;
+	background: #fff;
+	box-shadow:  0 0 0 2px rgba(212, 212, 212, 0.7) inset, 2px 3px 0 rgba(0, 0, 0, 0.15);	
+	border-radius: 5px;
+	margin: 0 auto;
+	overflow:hidden;
+}
+.header{
+	background: rgb(212,212,212);
+	box-shadow: 0 -2px 3px 0 rgba(0, 0, 0, 0.50) inset, 0 1px 3px 0 rgba(0, 0, 0, 0.30);
+	float:left;
+	width: 100%;
+}
+.title {
+	float: left;
+	margin-left: 15px;
+	height: 1.2em;
+	position: relative;
+	bottom: 5px;
+}
+.title h1 {
+	float: left;
+}
+.title img {
+	float: left;
+	position: relative;
+	top: 17px;
+	margin-right: 6px;
+}
+.title span {
+	margin: 0;
+	padding: 0;
+	text-shadow: 1px 1px 0 rgba(66, 82, 98, 0.7);
+}
+.title .blue{
+	color: rgb(135,157,192);
+}
+.title .orange{
+	color: rgb(235,110,31);
+}
+.title .white {
+	color: #FFF;
+}
+.top-nav {
+	color:#425262;
+	list-style: none;
+	float: right;
+	margin-right: 15px;
+}
+.top-nav li {
+	float: left;
+	margin-left:20px;
+	font-size: 30px;
+	background: rgba(176, 53, 20, 0.6) url('textures/texture.png');
+	text-align: center;
+	border-radius: 7px;
+	color: #FFF4E8;
+	text-shadow: 1px 1px 0 rgba(2, 83, 115, 0.7);
+	line-height: 1.2em;
+	box-shadow:  0 0 0 1px rgba(176, 53, 20, 0.7) inset, 1px 1px 0 rgba(0, 0, 0, 0.15);
+	border: 2px solid rgba(213,99, 68, 0.4);
+	padding: 0 5px;
+}
+.top-nav li.first {
+	margin-left:0px;
+}
+.banner {
+	width: 740px;
+	margin: 0 auto;
+}
+.banner img {
+	margin-top: 7px;
+}
+.main-content {
+	width: 90%;
+	margin: 0 auto;
+}

@@ -1,4 +1,75 @@
-body {background: #425262 url(textures/swirls.png);}
+@font-face {
+	font-family: 'Museo100';
+	src: url('fonts/museo100regular.eot');
+	src: local('☺'),
+		url('fonts/Museo100-Regular.otf') format("opentype"),
+		url('fonts/museo100regular.ttf') format("truetype");
+}
+@font-face {
+	font-family: 'Museo100';
+	src: url('fonts/museo300regular.eot');
+	src: local('☺'),
+		url('fonts/Museo300-Regular.otf') format("opentype"),
+		url('fonts/museo300regular.ttf') format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'Museo300';
+	src: url('fonts/museo300regular.eot');
+	src: local('☺'),
+		url('fonts/Museo300-Regular.otf') format("opentype"),
+		url('fonts/museo300regular.ttf') format("truetype");
+}
+@font-face {
+	font-family: 'Museo300';
+	src: url('fonts/museo500regular.eot');
+	src: local('☺'),
+		url('fonts/Museo500-Regular.otf') format("opentype"),
+		url('fonts/museo500regular.ttf') format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'Museo500';
+	src: url('fonts/museo500regular.eot');
+	src: local('☺'),
+		url('fonts/Museo500-Regular.otf') format("opentype"),
+		url('fonts/museo500regular.ttf') format("truetype");
+}
+@font-face {
+	font-family: 'Museo500';
+	src: url('fonts/museo700regular.eot');
+	src: local('☺'),
+		url('fonts/Museo700-Regular.otf') format("opentype"),
+		url('fonts/museo700regular.ttf') format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'Museo700';
+	src: url('fonts/museo700regular.eot');
+	src: local('☺'),
+		url('fonts/Museo700-Regular.otf') format("opentype"),
+		url('fonts/museo700regular.ttf') format("truetype");
+}
+@font-face {
+	font-family: 'Museo700';
+	src: url('fonts/museo900regular.eot');
+	src: local('☺'),
+		url('fonts/Museo900-Regular.otf') format("opentype"),
+		url('fonts/museo900regular.ttf') format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'Museo900';
+	src: url('fonts/museo900regular.eot');
+	src: local('☺'),
+		url('fonts/Museo500-Regular.otf') format("opentype"),
+		url('fonts/museo500regular.ttf') format("truetype");
+}
+
+body {
+	background: #425262 url(textures/swirls.png);
+	font-family: Museo300, Helvetica, Arial, sans-serif;
+}
 .container {
 	width: 970px;
 	background: #fff;
@@ -13,6 +84,9 @@ body {background: #425262 url(textures/swirls.png);}
 	float:left;
 	width: 100%;
 }
+.header a {
+	text-decoration: none;
+}
 .title {
 	float: left;
 	margin-left: 15px;
@@ -21,7 +95,12 @@ body {background: #425262 url(textures/swirls.png);}
 	bottom: 5px;
 }
 .title h1 {
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', Arial, Helvetica, Verdana, 'sans serif';
 	float: left;
+	text-transform: uppercase;
+	font-size: 26px;
+	position: relative;
+	top: 11px;
 }
 .title img {
 	float: left;
@@ -47,7 +126,7 @@ body {background: #425262 url(textures/swirls.png);}
 	color:#425262;
 	list-style: none;
 	float: right;
-	margin-right: 15px;
+	margin-right: 17px;
 }
 .top-nav li {
 	float: left;
@@ -66,12 +145,21 @@ body {background: #425262 url(textures/swirls.png);}
 .top-nav li.first {
 	margin-left:0px;
 }
+.top-nav li:hover {
+	border: 2px solid rgba(176, 53, 20, 0.4);
+	background: rgba(213, 99, 68, 0.6) url('textures/speckles.png');
+	box-shadow:  0 0 0 1px rgba(213, 99, 68, 0.9) inset, 1px 1px 0 rgba(0, 0, 0, 0.15);
+}
+.top-nav li:active {
+	color: #425262;
+	text-shadow: 1px 1px 0 rgba(256, 256, 256, 0.7);
+}
 .banner {
 	width: 740px;
 	margin: 0 auto;
 }
 .banner img {
-	margin-top: 7px;
+	margin-top: 9px;
 }
 .main-content {
 	width: 90%;

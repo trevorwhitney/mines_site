@@ -70,6 +70,16 @@ body {
 	background: #425262 url(textures/swirls.png);
 	font-family: Museo300, Helvetica, Arial, sans-serif;
 }
+a {
+	color: rgb(176, 53, 20);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	color: #425262;
+}
 .container {
 	width: 970px;
 	background: #fff;
@@ -100,7 +110,7 @@ body {
 	text-transform: uppercase;
 	font-size: 26px;
 	position: relative;
-	top: 11px;
+	top: 10px;
 }
 .title img {
 	float: left;
@@ -127,10 +137,11 @@ body {
 	list-style: none;
 	float: right;
 	margin-right: 17px;
+	width: 600px;
 }
 .top-nav li {
-	float: left;
-	margin-left:20px;
+	float: right;
+	margin-right:20px;
 	font-size: 30px;
 	background: rgba(176, 53, 20, 0.6) url('textures/speckles.png');
 	text-align: center;
@@ -143,7 +154,7 @@ body {
 	padding: 0 5px;
 }
 .top-nav li.first {
-	margin-left:0px;
+	margin-right:0px;
 }
 .top-nav li:hover {
 	border: 2px solid rgba(176, 53, 20, 0.4);
@@ -163,5 +174,24 @@ body {
 }
 .main-content {
 	width: 90%;
-	margin: 0 auto;
+	margin: 0 auto 35px;
+}
+.contact {
+	width: 300px;
+	text-align: center;
+	margin: 100px auto 0;
+	font-size: 24px;
+	text-transform: uppercase;
+}
+.disclaimer {
+	width: 100px;
+	text-align: center;
+	margin: 15px auto 0;
+}
+.disclaimer a {
+	text-decoration: none;
+	color: #FFF;
+}
+.disclaimer a:hover {
+	text-decoration: underline;
 }

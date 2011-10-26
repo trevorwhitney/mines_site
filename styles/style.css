@@ -176,12 +176,30 @@ a:active {
 	width: 90%;
 	margin: 0 auto 35px;
 }
+p.first {
+	margin-top:80px;
+}
 .contact {
-	width: 300px;
-	text-align: center;
-	margin: 100px auto 0;
+	width: 500px;
+	margin: 10px auto 120px;
 	font-size: 24px;
 	text-transform: uppercase;
+}
+.contact a {
+	float:left;
+	line-height: 3.2em;
+}
+.contact object {
+	float: right;
+}
+.about-me-image {
+	width: 334px;
+	margin: 80px auto 5px auto;
+}
+.about-me-image img {
+	height: 251px;
+	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+	border: 1px solid rgba(213,99,68, 0.8);
 }
 .disclaimer {
 	width: 100px;

@@ -207,9 +207,8 @@ p.first, h1.first {
 	margin: 0;
 }
 .lessons {
-	position: relative;
-	top: 10px;
-	float: lefts;
+	margin-top: 10px;
+	float: left;
 }
 .lesson {
 	float:left;

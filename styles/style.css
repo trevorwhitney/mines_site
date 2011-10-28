@@ -176,11 +176,6 @@ a:active {
 	width: 90%;
 	margin: 0 auto 35px;
 }
-.main-content h1 {
-	color: #425262;
-	border-bottom: 2px solid #425262;
-	margin: 0;
-}
 p.first, h1.first {
 	margin-top:80px;
 }
@@ -206,9 +201,15 @@ p.first, h1.first {
 	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
 	border: 1px solid rgba(213,99,68, 0.8);
 }
+.lessons h1, .fun-experiments h1 {
+	color: #425262;
+	border-bottom: 2px solid #425262;
+	margin: 0;
+}
 .lessons {
 	position: relative;
-	margin-top: 80px;
+	top: 10px;
+	float: lefts;
 }
 .lesson {
 	float:left;
@@ -247,8 +248,8 @@ p.first, h1.first {
 	margin: 7px 5px 3px 5px;
 }
 .fun-experiments {
-	position: relative;
-	top: 10px;
+	float: left;
+	margin-top: 20px;
 }
 .banner {
 	width: 794px;

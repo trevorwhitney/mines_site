@@ -176,7 +176,12 @@ a:active {
 	width: 90%;
 	margin: 0 auto 35px;
 }
-p.first {
+.main-content h1 {
+	color: #425262;
+	border-bottom: 2px solid #425262;
+	margin: 0;
+}
+p.first, h1.first {
 	margin-top:80px;
 }
 .contact {
@@ -200,6 +205,54 @@ p.first {
 	height: 251px;
 	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
 	border: 1px solid rgba(213,99,68, 0.8);
+}
+.lessons {
+	position: relative;
+	margin-top: 80px;
+}
+.lesson {
+	float:left;
+	margin: 10px auto;
+}
+.lesson-header {
+	background: rgba(176, 53, 20, 0.6) url('textures/speckles.png');
+	height: 35px;
+	padding: 0;
+	box-shadow: 0 -2px 3px 0 rgba(0, 0, 0, 0.50) inset, 0 1px 3px 0 rgba(0, 0, 0, 0.30);
+}
+.lesson h2 {
+	display:block;
+	float: left;
+	line-height: 1em;
+	margin: 5px 0 0 3px;
+	color: #FFF;
+}
+.download {
+	display:block;
+	float:right;
+	line-height:1.8em;
+	margin: 5px 5px 0 10px;
+}
+.download a {
+	color: #425262;
+}
+.lesson .lesson-content {
+	float:left;
+	margin: 0 0 0 0;
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+	border: 2px solid rgba(213,99, 68, 0.4);
+	border-top: none;
+}
+.lesson .lesson-content p {
+	margin: 7px 5px 3px 5px;
+}
+.fun-experiments {
+	position: relative;
+	top: 10px;
+}
+.banner {
+	width: 794px;
+	margin: 0 auto;
 }
 .disclaimer {
 	width: 100px;

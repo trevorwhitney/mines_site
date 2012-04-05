@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Using Android in Real-Time Embedded Systems</title>
+	<meta name="viewport" content="width=1024, user-scalable=no" />
+	<link rel="stylesheet" href="styles/deck.core.css" type="text/css" />
+	<link rel="stylesheet" href="styles/presentation.css" type="text/css" />
+	<link rel="stylesheet" href="styles/transitions.css" type="text/css" />
+	<link rel="stylesheet" href="styles/deck.status.css" type="text/css" />
+	<script src="js/modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<section class="slide">
+	<h1>Using Android in Real-Time Embedded Systems</h1>
+	<h3 class="author">By Trevor Whitney</h3>
+</section>
+<section class="slide smooth-images">
+	<h2>Why use Android?</h2>
+	<h3>How many people in this room have Internet enabled computers that they carry, all day long, in their pockets?</h3>
+	<br />
+	<div class="slide">
+		<div>As we include more small, embedded systems in our daily lives, we will expect more interoperability between them. We will expect devices to be able to communicate with one another, as well as with the Internet, for easier access to information. Android can add this capability to real-time devices, such as medical equipment.</div>
+	</div>
+</section>
+<section class="slide">
+	<h2>Example Case 1: Anesthesiology</h2>
+	<img src="images/anesthesiology.png" />
+	<div>This is a machine used by anesthesiologists to monitor brain state. It's implementation required 2-D graphics, networking, USB connections, and a simple file system. It was built using Nucleus OS, a real-time operating system developed by Mentor Graphics.</div>
+</section>
+<section class="slide">
+	<h2>Example Case 2: Blood Glucose Monitoring</h2>
+	<img src="images/blood_glucose.png" class="left" />
+	<div class="column">This is a blood glucose meter, an essential medical device to the daily survival of many type 2 diabetics. It requires a simple user interface, USB, 802.11 wireless, and was again built on Nucleus OS.</div>
+</section>
+<section class="slide">
+	<h2>Don't Reinvent the Wheel</h2>
+	<div>In both of the previous cases, the drivers for USB and networking had to be written for that particular device. The graphics display also had to be created, particularly in the case of the brain monitor. This is too analogous of the days of DOS, where all programs had to write their own drivers.</div>
+	<img src="images/windows_dos.png" />
+</section>
+<section class="slide">
+	<h2>Android Bridges The Gap For Embedded Systems</h2>
+	<div>Android provides the drivers and libraries developers need to make engaging user interfaces and Internet enabled devices.</div>
+	<img src="images/android_linux.png" />
+</section>
+<section class="slide">
+	<h2>How Android Bridges The Gap</h2>
+	<img src="images/android_architecture.png" class="right"/>
+	<div class="left">
+		<ul>
+			<lh>Linux Provides:</lh>
+				<li>Networking</li>
+				<li>Security</li>
+				<li>Drivers</li>
+				<br />
+			<lh>Android Libraries Provide:</lh>
+				<li>Media Encoding &amp; Decoding</li>
+				<li>2D and 3D Graphics Based on OpenGL ES</li>
+				<li>SQLite Database</li>
+				<li>Bionic C Library</li>
+		</ul>
+	</div>
+</section>
+<section class="slide">
+	<h2>Is Android Ready for Real-Time?</h2>
+	<h3>Evaluating Android OS for Embedded Real-Time Systems</h3>
+	<div class="byline">By Claudio Maia, Luis Nogueira, and Luis Miguel Pinho from the CISTER Research Centre at the Polytechnic Institute of Porto's School of Engineering.</div>
+	<div>Since the the public release of Android as an open source operating system, it has constantly been improved and expanded in terms of features and supported hardware. While originally intended for mobile phone platforms, Android has gained acceptance in the embedded systems community and is continually being extended to new types of devices. One area that has yet to be deeply explored, however, is the real-time capabilities and potential of this operating system. The above paper conducts an academic exploration into this issue. There is no actual experimentation, but there is a careful analysis of the Android source code to determine it's limitations for use in real-time applications in order to suggest various directions Android development would have to move in to make it suitable for real-time applications. The paper is a part of the Cooperative Embedded Systems project, or CooperatES. Their primary focus was analyzing Android for use in soft real-time applications, and most of their solutions involve modifying Android itself.</div>
+</section>
+<section class="slide">
+	<h2>Why Android Is Not Ready for Real-Time</h2>
+	<div>Android programs run inside the Dalvik VM, which executes Java bytecode. The Dalvik VM relies on the Linux kernel to perform all scheduling operations. This VM does support threads, and each thread can be assigned a priority between 1-10, which each map to Linux <em>nice</em> values in the 100-139 range, the range reserved for normal, as in non real-time, tasks. As a result, all threads running on top of the VM will be scheduled with <code>SCHED_OTHER</code>, and will thus be scheduled using the fair scheme provided by the Linux kernel. While Linux does support two real-time scheduling classes, <code>SCHED_RR</code> for a round robin scheduling policy, and <code>SCHED_FIFO</code> for first in first out scheduling policy, neither of these are available to threads running on top of the VM.</div>
+</section>
+<section class="slide">
+	<h2>CFS - Completely Fair Scheduler</h2>
+	<img src="images/cfs.png" />
+	<div>Processes scheduled using the <code>SCHED_OTHER</code> class will be scheduled using the standard Linux scheduler, known as the "Completely Fair Scheduler". This scheduler uses a balanced binary tree like the one above. The processes with the highest need for the processor are on the left, and those with the least need on the right. The numbers in the circle represent the "virtual runtime", or amount of time that has been provided to a given task. The scheduling algorithm starts with the left most node. Each task accounts for the CPU time taken during each execution cycle, and adds that to it's previous virtual runtime. The task is then re-inserted into the tree with the new value. This scheduling algorithm gives priority to tasks that have had less time to run, and therefore assures a fair execution time for all. While this may be a good scheduling algorithm for non-critical systems, it cannot make any real-time guarantees.</div>
+</section>
+<section class="slide">
+	<h2>The Bionic Droid</h2>
+	 <div>Android provides it's own implementation of <em>libc</em>, the standard Linux C library, called <em>bionic</em>. Bionic has it's own implementation of the <em>pthread</em> library which does not support process-shared mutexes or condition variables. As we remember from class, generic OS thread libraries provide no fixed guarantees about when threads will run, which is not suitable for real-time systems. Furthermore, we learned how to use mutexes to control, to some degree, the behavior of systems. While the Dalvik VM does support thread-mutexing and thread condition variables in a limited manner, not having them as a part of the bionic pthread implementation makes it much harder for developers to right predictable code suitable for a real-time environment.</div>
+</section>
+<section class="slide">
+	<h2>Interrupts and Memory</h2>
+	<h3>Interrupt Priority</h3>
+	<div>Interrupts have the highest priority in Linux. Since Android is built on the standard Linux kernel, this is true for Android as well. Thus, high priority tasks, where limiting execution time is essential to meeting hard real-time deadline, could still be interrupted.</div>
+	<br />
+	<h3>Memory allocation</h3>
+	<div>Linux memory operations, such as accounting, allocation, and reallocation all suffer from an unbounded and non-deterministic behavior. Thus, it is not possible to define and measure how long these operations will take, which makes it impossible to guarantee hard real-time deadline. This is also not acceptable for a real-time system.</div>
+</section>
+<section class="slide">
+	<h2>Global Manager</h2>
+	<div>In order for Android to work in a real-time application, a global manager that has a complete knowledge of an application's needs and the system's status is needed. Furthermore, a scheduler which can interact with, or at least react to, this manager is also required. The paper I read proposed four possible solutions to provide this.</div>
+</section>
+<section class="slide">
+	<h2>RT Linux with RT VM</h2>
+	<img src="images/rt-android-1.png" />
+	<div>This approach replaces the underlying Linux kernel with a real-time Linux system, like RTLinux or Nucleus. It also replaces the Dalvik VM with a real-time VM. This would require Android applications to be re-compiled to run on the new VM, and only provides soft real-time guarantees.</div>
+</section>
+<section class="slide">
+	<h2>RT Linux with Dalvik Extensions</h2>
+	<img src="images/rt-android-2.png" />
+	<div>This approach again replaces the underlying Linux kernel with a real-time capable kernel, but maintains the Dalvik VM and merely extends it to enable real-time functionality. Android applications may or may not have to be recompiled for this extended VM, and this architecture also only provides soft real-time guarantees.</div>
+</section>
+<section class="slide">
+	<h2>RT Linux and Native Applications</h2>
+	<img src="images/rt-android-3.png" />
+	<div>This approach simply replaces the underlying Linux kernel with a real-time kernel, and then runs all real-time applications natively so that they use the kernel directly. This bypasses most of the android architecture, which not only prevents the use of most android applications, but seems to negate the purpose of adding android to a real-time system in the first place.</div>
+</section>
+<section class="slide">
+	<h2>Android on a Real-Time Hypervisor</h2>
+	<img src="images/rt-android-4.png" />
+	<div>I think this is the best approach. It requires no modification of the Android operating system, and is the only approach that is capable of hard real-time guarantees. There are already real-time hypervisor operating systems for embedded systems like PikeOS that support the visualization of Android. Therefore, this approach can be implemented immediately without having to re-write and Android code.</div>
+</section>
+<section class="slide">
+	<img src="images/sysgo.png" />
+	<div>Sysgo makes an embedded OS called PikeOS. PikeOS is a real-time hypervisor that can run a variety of operating systems, which it calls "personalities", that have been modified to work with they hypervisor in PikeOS. As of the latest version of PikeOS, Android is a supported "personality". The PikeOS micro-kernel is the global manager that is needed to adopt Android into the the world of real-time embedded systems.</div>
+</section>
+<section class="slide">
+	<h2>PikeOS Partitioning</h2>
+	<img src="images/PikeOS_Partitioning.jpg" />
+	<div>The PikeOS micro-kernel allows partitioning, to create an isolated environment for various operating systems, real-time environments, and APIs on one system. Applications run in their respected partition and are isolated from the applications in other partitions. Each partition receives it's own set of system resources, and everything is managed my the PikeOS micro-kernel.</div>
+</section>
+<section class="slide">
+	<h2>Remember Scheduling?</h2>
+	<img src="images/scheduling.png" />
+	<div class="center">Just a quick reminder of some terminology :)</div>
+</section>
+<section class="slide">
+	<h2>PikeOS Scheduling</h2>
+	<img src="images/PikeOS_Scheduling.jpg" />
+	<div>The PikeOS scheduling system combines time and priority based scheduling. Periods, what they call "time slices", are statically set ahead of time. A time slice is the response time allotted for a given task. Inside each period, tasks are executed based on priority. Real-time tasks (executed on real-time partitions) are given a higher priority. Each real-time task is given a period to execute in. If the execution time for the real-time task ends up being less than the time alloted for the period, the remaining time is dynamically allocated to run lower priority tasks, which are load balanced using a round-robin scheduler. Thus, for example, we could have a partition running Nucleus that would handle real-time code, and be given a higher priority than our Android partition running non-real-time tasks.</div>
+</section>
+<section class="slide">
+	<h2>Conclusion</h2>
+	<div>The popularity of Android is growing quickly in the embedded systems community. It's Linux kernel and core libraries provide many features that make the development of applications quicker and easier. Using Android, developers can quickly add USB and networking capabilities to their devices, as well as create easier to use and more engaging interfaces. This is particularly useful for medical applications, where many of the clients are elderly. However, medical applications often have real-time requirements, which are often safety and even life critical, which Android is not suited to handle on it's own. Through the use of visualization, we can combine the rapid-development and usability gains from Android with a real-time operating system on an embedded system.</div>
+</section>
+<section class="slide">
+	<h2>Sources</h2>
+	<div class="citation">C. Maia, L. Nogueira & L.M. Pinho, "Evaluating Android OS for Embedded Real-Time Systems," pp. 63–70, [Online]. Available: <a href="http://www.ittc.ku.edu/~niehaus/classes/753-f10/documents/Android_RealTime.pdf">http://www.ittc.ku.edu/~niehaus/classes/753-f10/documents/Android_RealTime.pdf</a>. [Accessed Nov. 28, 2011].</div>
+	<div class="citation">Walls, C., Android and RTOS For Medical Applications. Retrieved November 28, 2011 from <a href="https://mentor1.adobeconnect.com/_a781163502/p54006035/">https://mentor1.adobeconnect.com/_a781163502/p54006035/</a></div>
+	<div class="citation">PikeOS embedded Virtualization. Retrieved November 28, 2011 from <a href="http://www.sysgo.com/products/pikeos-rtos-and-virtualization/embedded-virtualization/">http://www.sysgo.com/products/pikeos-rtos-and-virtualization/embedded-virtualization/</a></div>
+	<div class="citation">PikeOS RTOS Technology. Retrieved November 28, 2011 from <a href="http://www.sysgo.com/products/pikeos-rtos-and-virtualization/rtos-technology/">http://www.sysgo.com/products/pikeos-rtos-and-virtualization/rtos-technology/</a></div>
+</section>
+
+	
+<p class="deck-status">
+   <span class="deck-status-current"></span>
+   /
+   <span class="deck-status-total"></span>
+</p>
+
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/deck.core.js"></script>
+<script src="js/deck.status.js"></script>
+
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+	$.extend(true, $.deck.defaults, {
+   selectors: {
+      statusCurrent: '.deck-status-current',
+      statusTotal: '.deck-status-total'
+   },
+
+   countNested: true
+});
+</script>
+</body>
+</html>
